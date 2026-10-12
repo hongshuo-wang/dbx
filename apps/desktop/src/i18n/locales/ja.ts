@@ -2386,6 +2386,7 @@ export default withEnglishFallback({
     filterNotLike: "値を含まない",
     filterLessThan: "値より小さい",
     filterGreaterThan: "値より大きい",
+    filterCustom: "カスタムフィルター",
     filterIsNull: "NULL値を表示",
     filterIsNotNull: "非NULL値を表示",
     clearFilter: "フィルターをクリア",
