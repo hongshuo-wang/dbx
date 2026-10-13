@@ -234,6 +234,12 @@ func directConnectionParams(params connectParams) (connectParams, bool) {
 // server reports that cluster routing is unavailable.
 const routingUnsupportedMessage = "does not support: routing"
 
+// memgraphRoutingUnsupportedMessage is how Memgraph refuses the routing-table
+// procedure. Memgraph speaks Bolt and accepts `neo4j://`, so it is reachable
+// through the Neo4j connection type, but a single instance is not a cluster and
+// answers with this instead of the Neo4j wording (#11947).
+const memgraphRoutingUnsupportedMessage = "cannot fetch routing table"
+
 // isRoutingUnsupported reports whether err is the driver's "routing requires a
 // cluster" failure. The driver flattens its typed feature error into a usage
 // error, so the message is inspected as well as the type.
@@ -245,7 +251,8 @@ func isRoutingUnsupported(err error) bool {
 	if errors.As(err, &featureErr) && strings.EqualFold(featureErr.Feature, "routing") {
 		return true
 	}
-	return strings.Contains(strings.ToLower(err.Error()), routingUnsupportedMessage)
+	message := strings.ToLower(err.Error())
+	return strings.Contains(message, routingUnsupportedMessage) || strings.Contains(message, memgraphRoutingUnsupportedMessage)
 }
 
 func isNeo4jScheme(value string) bool {

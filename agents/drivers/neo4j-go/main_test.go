@@ -178,6 +178,19 @@ func TestIsRoutingUnsupported(t *testing.T) {
 			want: true,
 		},
 		{name: "typed feature error", err: &neo4jdb.FeatureNotSupportedError{Server: "db:7687", Feature: "routing", Reason: "requires cluster setup"}, want: true},
+		// #11947: Memgraph speaks Bolt and accepts `neo4j://`, but refuses the
+		// routing-table procedure with its own wording, so the direct fallback
+		// has to recognise it too.
+		{
+			name: "memgraph single-instance routing refusal",
+			err:  errors.New("Neo4jError: Memgraph.TransientError.MemgraphError.MemgraphError (You cannot fetch routing table from an instance which is not part of a cluster.)"),
+			want: true,
+		},
+		{
+			name: "memgraph routing table wording without neo4j error prefix",
+			err:  errors.New("You cannot fetch routing table from an instance which is not part of a cluster."),
+			want: true,
+		},
 		{name: "typed route-to-database error", err: &neo4jdb.FeatureNotSupportedError{Server: "db:7687", Feature: "route to database", Reason: "requires at least server v4"}, want: false},
 		{name: "unrelated error", err: errors.New("connection refused"), want: false},
 		{name: "nil error", err: nil, want: false},
