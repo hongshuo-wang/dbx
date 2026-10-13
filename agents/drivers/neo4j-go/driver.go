@@ -65,6 +65,9 @@ func openVerifiedRuntime(params connectParams) (*connectionRuntime, error) {
 		// Older Bolt versions supply numeric IDs in the element-ID fields.
 		runtime.legacySingleDatabase = info.ProtocolVersion().Major < 4
 		runtime.legacyGraphIDs = info.ProtocolVersion().Major < 5
+		// Memgraph reports itself as a Neo4j-compatible server, so the product
+		// name is the only way to tell them apart.
+		runtime.memgraph = strings.Contains(strings.ToLower(info.Agent()), "memgraph")
 	}
 	return runtime, nil
 }
@@ -342,7 +345,28 @@ func (s *server) databaseName(override string) string {
 	if value := strings.TrimSpace(override); value != "" {
 		return value
 	}
+	// Memgraph exposes exactly one database named `memgraph`, and sending the
+	// Neo4j default `neo4j` fails with "Tried to retrieve an unknown database".
+	// Omit the name unless the user configured one, so the server picks its own
+	// default (#11947).
+	if s.runtime != nil && s.runtime.memgraph && !hasConfiguredDatabase(s.params) {
+		return ""
+	}
 	return configuredDatabase(s.params)
+}
+
+// hasConfiguredDatabase reports whether a database name came from the user
+// (the form field or the connection string) rather than the Neo4j default.
+func hasConfiguredDatabase(params connectParams) bool {
+	if strings.TrimSpace(params.Database) != "" {
+		return true
+	}
+	value := strings.TrimPrefix(strings.TrimSpace(params.ConnectionString), "jdbc:")
+	parsed, err := url.Parse(value)
+	if err != nil {
+		return false
+	}
+	return strings.TrimSpace(parsed.Query().Get("database")) != "" || strings.Trim(strings.TrimSpace(parsed.Path), "/") != ""
 }
 
 func configuredDatabase(params connectParams) string {
