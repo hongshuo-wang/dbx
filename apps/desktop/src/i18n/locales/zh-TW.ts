@@ -5915,6 +5915,8 @@ export default withEnglishFallback({
     wrapLines: "切換自動換行",
     copyFullText: "複製完整內容",
     previewTruncated: "預覽已截斷：省略 {lines} 行、{characters} 個字元。複製仍會包含完整內容。",
+    noteUnrecoverable: "執行後通常無法找回已刪除的資料，建議先備份。",
+    noteRecoverable: "資料逐列刪除並寫入交易記錄，通常可從記錄或備份找回。",
     deleteMessage: "此刪除操作可能不可逆，確認要繼續嗎？",
     deleteConfirm: "確認刪除",
     deleteRowMessage: "此列將被標記為刪除，儲存後會從資料庫刪除，確認要繼續嗎？",

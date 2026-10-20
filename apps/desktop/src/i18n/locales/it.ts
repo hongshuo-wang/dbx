@@ -6585,6 +6585,8 @@ export default withEnglishFallback({
     wrapLines: "Attiva/disattiva ritorno a capo",
     copyFullText: "Copia testo completo",
     previewTruncated: "Anteprima troncata: omesse {lines} righe e {characters} caratteri. La copia include il testo completo.",
+    noteUnrecoverable: "Dopo l'esecuzione le righe eliminate di solito non sono recuperabili. Esegui un backup prima.",
+    noteRecoverable: "Le righe vengono eliminate una per una e registrate, quindi di solito sono recuperabili da un log o da un backup.",
     deleteMessage: "Questa operazione di eliminazione potrebbe essere irreversibile. Continuare?",
     deleteConfirm: "Conferma Eliminazione",
     deleteRowMessage: "Questa riga verrà contrassegnata per l'eliminazione e rimossa dal database dopo il salvataggio. Continuare?",

@@ -6846,6 +6846,8 @@ export default withEnglishFallback({
     wrapLines: "Przełącz zawijanie wierszy",
     copyFullText: "Kopiuj pełny tekst",
     previewTruncated: "Podgląd skrócony: pominięto {characters} znaków w {lines} wierszach. Kopiowanie obejmuje pełną treść.",
+    noteUnrecoverable: "Po wykonaniu usuniętych wierszy zwykle nie da się odzyskać. Najpierw wykonaj kopię zapasową.",
+    noteRecoverable: "Wiersze są usuwane pojedynczo i zapisywane w dzienniku, więc zwykle można je odzyskać z dziennika lub kopii zapasowej.",
     deleteMessage: "Ta operacja usunięcia może być nieodwracalna. Kontynuować?",
     deleteConfirm: "Potwierdź usunięcie",
     deleteRowMessage: "Ten wiersz zostanie oznaczony do usunięcia i skasowany z bazy danych po zapisaniu. Kontynuować?",

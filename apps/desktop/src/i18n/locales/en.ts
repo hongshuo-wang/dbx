@@ -7463,6 +7463,8 @@ export default {
     wrapLines: "Toggle word wrap",
     copyFullText: "Copy full text",
     previewTruncated: "Preview truncated: {characters} characters across {lines} lines omitted. Copy still includes the full text.",
+    noteUnrecoverable: "Deleted rows usually cannot be recovered after this runs. Back up the data first.",
+    noteRecoverable: "Rows are deleted one by one and logged, so they can usually be recovered from a log or a backup.",
     deleteMessage: "This delete operation may be irreversible. Continue?",
     deleteConfirm: "Confirm Delete",
     deleteRowMessage: "This row will be marked for deletion and removed from the database after saving. Continue?",

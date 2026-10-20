@@ -6605,6 +6605,8 @@ export default withEnglishFallback({
     wrapLines: "折り返し表示を切り替え",
     copyFullText: "全文をコピー",
     previewTruncated: "プレビューを省略しました: {lines} 行、{characters} 文字を省略。コピーには全文が含まれます。",
+    noteUnrecoverable: "実行後は削除したデータを通常復元できません。事前にバックアップしてください。",
+    noteRecoverable: "行は 1 行ずつ削除されログに記録されるため、通常はログやバックアップから復元できます。",
     deleteMessage: "この削除操作は元に戻せない可能性があります。続行しますか？",
     deleteConfirm: "削除を確認",
     deleteRowMessage: "この行は削除対象としてマークされ、保存後にデータベースから削除されます。続行しますか？",

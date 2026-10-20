@@ -228,3 +228,22 @@ describe("DangerConfirmDialog running/cancel footer state", () => {
     expect(buttons.some((button) => button.textContent?.trim() === "Cancel")).toBe(true);
   });
 });
+
+describe("DangerConfirmDialog data-loss note", () => {
+  const noteText = () => document.body.querySelector("[data-testid='danger-data-loss-note']")?.textContent?.trim();
+
+  it("warns that TRUNCATE and DROP TABLE data cannot be recovered", async () => {
+    await mountDialog("TRUNCATE TABLE public.orders;");
+    expect(noteText()).toContain(i18n.global.t("dangerDialog.noteUnrecoverable"));
+  });
+
+  it("says a row-wise DELETE can be recovered", async () => {
+    await mountDialog("DELETE FROM public.orders;");
+    expect(noteText()).toContain(i18n.global.t("dangerDialog.noteRecoverable"));
+  });
+
+  it("stays quiet for DDL that does not delete rows", async () => {
+    await mountDialog("ALTER TABLE public.orders RENAME TO orders_old;");
+    expect(noteText()).toBeUndefined();
+  });
+});

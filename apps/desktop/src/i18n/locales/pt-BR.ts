@@ -6585,6 +6585,8 @@ export default withEnglishFallback({
     wrapLines: "Alternar quebra de linha",
     copyFullText: "Copiar texto completo",
     previewTruncated: "Visualização truncada: {lines} linhas e {characters} caracteres omitidos. A cópia inclui o texto completo.",
+    noteUnrecoverable: "Normalmente, as linhas excluídas não podem ser recuperadas depois. Faça um backup antes.",
+    noteRecoverable: "As linhas são excluídas uma a uma e registradas, então geralmente podem ser recuperadas a partir de um log ou backup.",
     deleteMessage: "Esta operação de exclusão pode ser irreversível. Continuar?",
     deleteConfirm: "Confirmar exclusão",
     deleteRowMessage: "Esta linha será marcada para exclusão e removida do banco de dados após salvar. Continuar?",

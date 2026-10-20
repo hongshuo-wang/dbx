@@ -7444,6 +7444,8 @@ export default withEnglishFallback({
     wrapLines: "切换自动换行",
     copyFullText: "复制完整内容",
     previewTruncated: "预览已截断：省略 {lines} 行、{characters} 个字符。复制仍会包含完整内容。",
+    noteUnrecoverable: "执行后通常无法找回已删除的数据，建议先备份。",
+    noteRecoverable: "数据逐行删除并写入事务日志，通常可从日志或备份找回。",
     deleteMessage: "此删除操作可能不可逆，确认要继续吗？",
     deleteConfirm: "确认删除",
     deleteRowMessage: "此行将被标记为删除，保存后会从数据库删除，确认要继续吗？",

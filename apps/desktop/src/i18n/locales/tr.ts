@@ -6027,6 +6027,8 @@ export default withEnglishFallback({
     wrapLines: "Sözcük kaydırmayı aç/kapat",
     copyFullText: "Tam metni kopyala",
     previewTruncated: "Önizleme kısaltıldı: {lines} satırda {characters} karakter atlandı. Kopyalama yine de tam metni içerir.",
+    noteUnrecoverable: "Çalıştırıldıktan sonra silinen satırlar genellikle kurtarılamaz. Önce yedek alın.",
+    noteRecoverable: "Satırlar tek tek silinip günlüğe yazıldığından, genellikle günlükten veya yedekten kurtarılabilir.",
     deleteMessage: "Bu silme işlemi geri alınamayabilir. Devam edilsin mi?",
     deleteConfirm: "Silmeyi Onayla",
     deleteRowMessage: "Bu satır silinmek üzere işaretlenecek ve kaydettikten sonra veritabanından kaldırılacak. Devam edilsin mi?",

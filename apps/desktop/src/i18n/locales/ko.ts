@@ -6299,6 +6299,8 @@ export default withEnglishFallback({
     wrapLines: "자동 줄바꿈 전환",
     copyFullText: "전체 텍스트 복사",
     previewTruncated: "미리보기가 잘렸습니다: {characters}자, {lines}줄이 생략되었습니다. 복사에는 전체 텍스트가 포함됩니다.",
+    noteUnrecoverable: "실행 후에는 삭제된 데이터를 일반적으로 복구할 수 없습니다. 먼저 백업하세요.",
+    noteRecoverable: "행이 하나씩 삭제되고 로그에 기록되므로 보통 로그나 백업에서 복구할 수 있습니다.",
     deleteMessage: "이 삭제 작업은 되돌릴 수 없습니다. 계속하시겠습니까?",
     deleteConfirm: "삭제 확인",
     deleteRowMessage: "이 행은 삭제로 표시되며 저장 후 데이터베이스에서 제거됩니다. 계속하시겠습니까?",

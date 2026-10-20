@@ -6797,6 +6797,8 @@ export default withEnglishFallback({
     wrapLines: "Alihkan bungkus kata",
     copyFullText: "Salin teks lengkap",
     previewTruncated: "Pratinjau dipotong: {characters} karakter pada {lines} baris dihilangkan. Salin tetap menyertakan teks lengkap.",
+    noteUnrecoverable: "Setelah dijalankan, baris yang dihapus biasanya tidak dapat dipulihkan. Cadangkan data terlebih dahulu.",
+    noteRecoverable: "Baris dihapus satu per satu dan dicatat di log, sehingga biasanya dapat dipulihkan dari log atau cadangan.",
     deleteMessage: "Operasi hapus ini mungkin tidak dapat dibatalkan. Lanjutkan?",
     deleteConfirm: "Konfirmasi Hapus",
     deleteRowMessage: "Baris ini akan ditandai untuk dihapus dan dihapus dari database setelah disimpan. Lanjutkan?",

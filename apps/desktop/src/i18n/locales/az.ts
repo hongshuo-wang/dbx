@@ -6134,6 +6134,8 @@ export default withEnglishFallback({
     wrapLines: "Sətirə keçirməni aç/bağla",
     copyFullText: "Tam mətni kopyala",
     previewTruncated: "Önbaxış qısaldılıb: {lines} sətirdə {characters} simvol buraxılıb. Kopyalama yenə də tam mətni əhatə edir.",
+    noteUnrecoverable: "İcra edildikdən sonra silinmiş sətirlər adətən bərpa oluna bilməz. Əvvəlcə ehtiyat nüsxə çıxarın.",
+    noteRecoverable: "Sətirlər bir-bir silinir və jurnala yazılır, ona görə də adətən jurnaldan və ya ehtiyat nüsxədən bərpa oluna bilər.",
     deleteMessage: "Bu silmə əməliyyatı geri qaytarılmaya bilər. Davam edilsin?",
     deleteConfirm: "Silməni təsdiqlə",
     deleteRowMessage: "Bu sətir silinmək üçün işarələnəcək və yadda saxlandıqdan sonra verilənlər bazasından çıxarılacaq. Davam edilsin?",

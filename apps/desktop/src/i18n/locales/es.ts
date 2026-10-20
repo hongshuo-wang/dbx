@@ -6771,6 +6771,8 @@ export default withEnglishFallback({
     wrapLines: "Alternar ajuste de línea",
     copyFullText: "Copiar texto completo",
     previewTruncated: "Vista previa truncada: se omitieron {lines} líneas y {characters} caracteres. La copia incluye el texto completo.",
+    noteUnrecoverable: "Por lo general, las filas eliminadas no se pueden recuperar después. Haz una copia de seguridad antes.",
+    noteRecoverable: "Las filas se eliminan una a una y quedan registradas, así que normalmente se pueden recuperar desde un registro o una copia de seguridad.",
     deleteMessage: "Esta operación de eliminación puede ser irreversible. ¿Continuar?",
     deleteConfirm: "Confirmar eliminación",
     deleteRowMessage: "Esta fila quedará marcada para eliminación y se borrará de la base de datos al guardar. ¿Continuar?",
