@@ -952,6 +952,39 @@ describe("useDataGridConditionEditor", () => {
     await vi.waitFor(() => expect(editor.suggestions.value[0]?.value).toBe(firstSnippet));
   });
 
+  it("suggests numeric literals for SQL Server bit columns", async () => {
+    const value = ref("");
+    const editor = useDataGridConditionEditor({
+      kind: "where",
+      value,
+      columns: [{ name: "enabled", dataType: "bit" }],
+      databaseType: "sqlserver",
+      historyScope: {},
+      suggestionDebounceMs: 1,
+    });
+    value.value = "enabled = ";
+    await nextTick();
+    await vi.waitFor(() => expect(editor.suggestions.value.map((item) => item.value)).toEqual(["1", "0"]));
+    expect(editor.accept(0)).toBe(true);
+    expect(value.value).toBe("enabled = 1");
+  });
+
+  it("does not suggest boolean literals for PostgreSQL bit strings", async () => {
+    const value = ref("");
+    const editor = useDataGridConditionEditor({
+      kind: "where",
+      value,
+      columns: [{ name: "mask", dataType: "bit(8)" }],
+      databaseType: "postgres",
+      historyScope: {},
+      suggestionDebounceMs: 1,
+    });
+    value.value = "mask = ";
+    await nextTick();
+    await vi.waitFor(() => expect(editor.suggestionsLoading.value).toBe(false));
+    expect(editor.suggestions.value).toEqual([]);
+  });
+
   it("suggests TRUE/FALSE for boolean columns and opens an IN list without value snippets", async () => {
     const value = ref("");
     const editor = useDataGridConditionEditor({

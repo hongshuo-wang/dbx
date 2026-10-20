@@ -60,7 +60,7 @@ function temporalValueSnippets(databaseType?: DatabaseType): string[] {
 }
 
 export function dataGridConditionValueSnippets(dataType: string | undefined, databaseType?: DatabaseType): string[] {
-  if (isDataGridConditionBooleanType(dataType, databaseType)) return ["TRUE", "FALSE"];
+  if (isDataGridConditionBooleanType(dataType, databaseType)) return databaseType === "sqlserver" ? ["1", "0"] : ["TRUE", "FALSE"];
   if (!isDataGridConditionTemporalType(dataType)) return [];
   return temporalValueSnippets(databaseType);
 }
