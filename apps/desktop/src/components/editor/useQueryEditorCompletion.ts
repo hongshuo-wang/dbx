@@ -294,7 +294,7 @@ export function useQueryEditorCompletion(options: QueryEditorCompletionOptions) 
       from,
       // Keep CodeMirror's live filtering enabled so an already-open menu follows the typed prefix.
       options: resultItems.map((item) => completionOptionForItem(item)),
-      validFor,
+      validFor: bypassFilter ? undefined : validFor,
       // When bypassing CodeMirror's matcher, supply our own highlight ranges so
       // the matched characters (Han substring or pinyin initials) stay marked.
       // Ranges must target the rendered text, which is displayLabel when set.

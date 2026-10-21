@@ -641,6 +641,7 @@ describe("quoted identifier completion results (issue #12008)", () => {
         expect(sql.slice(result!.from)).toBe(sql.slice(sql.lastIndexOf("test_") - 1));
         // ...so the provider disables CodeMirror's matcher and ranks the matches itself.
         expect((result as { filter?: boolean }).filter).toBe(false);
+        expect(result!.validFor).toBeUndefined();
         const labels = result!.options.map((option) => option.label);
         expect(labels).toContain("test_table");
         expect(labels).not.toContain("other_table");
