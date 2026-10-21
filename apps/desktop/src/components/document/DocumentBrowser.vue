@@ -12,6 +12,7 @@ import DangerConfirmDialog from "@/components/editor/DangerConfirmDialog.vue";
 import ErrorBanner from "@/components/ui/ErrorBanner.vue";
 import DataGrid from "@/components/grid/DataGrid.vue";
 import DataGridColumnLayoutPopover from "@/components/grid/DataGridColumnLayoutPopover.vue";
+import DataGridFreezeFirstColumnControl from "@/components/grid/DataGridFreezeFirstColumnControl.vue";
 import DataGridCopyFormatControl from "@/components/grid/DataGridCopyFormatControl.vue";
 import DataGridEmptyColumnsControl from "@/components/grid/DataGridEmptyColumnsControl.vue";
 import DataGridFontFamilyControl from "@/components/grid/DataGridFontFamilyControl.vue";
@@ -1551,7 +1552,7 @@ async function gridSave(changes: DocumentGridChanges) {
     }
 
     await api.documentSaveMeilisearchBatch(props.connectionId, props.collection, updates, deleteIds, inserts);
-    await reloadDocumentsAfterMutationOrRefresh();
+    await reloadDocumentsAfterGridSave();
     return;
   }
 
@@ -1623,7 +1624,7 @@ async function gridSave(changes: DocumentGridChanges) {
     page.value = 0;
     resetDynamoDbPagination();
   }
-  await reloadDocumentsAfterMutationOrRefresh();
+  await reloadDocumentsAfterGridSave();
 }
 
 function buildPathIdentityInsertDocument(row: MongoInputValue[], columns: string[], kind: Exclude<DocumentStoreKind, "mongodb">): JsonRecord {
@@ -2054,6 +2055,13 @@ async function countExactDocumentTotal(): Promise<number | undefined> {
 async function refreshDocuments() {
   if (documentStoreProvider.value.kind === "elasticsearch") resetElasticsearchTotals({ preservePaginationTotal: true });
   if (documentStoreProvider.value.kind === "dynamodb") resetDynamoDbExactCount();
+  await reloadDocumentsAfterMutationOrRefresh();
+}
+
+async function reloadDocumentsAfterGridSave() {
+  // Reload like the grid's own Refresh so the viewport and selection survive
+  // instead of the new page being treated as a fresh result (#12649).
+  dataGridRef.value?.prepareFullReload?.();
   await reloadDocumentsAfterMutationOrRefresh();
 }
 
@@ -2939,6 +2947,7 @@ defineExpose({ focusSearch });
             <Switch size="sm" :model-value="!!dataGridRef?.nullColumnsHidden" :disabled="!dataGridRef?.canToggleAllNullColumns" :aria-label="t('grid.hideNullColumns')" @update:model-value="dataGridRef?.toggleAllNullColumns()" />
           </div>
           <DataGridEmptyColumnsControl :count="dataGridRef?.allEmptyColumnCount" :column-count="dataGridRef?.displayableColumnCount" />
+          <DataGridFreezeFirstColumnControl />
           <DataGridCopyFormatControl
             :current-label="dataGridRef?.defaultCopyPreferenceLabel ?? '-'"
             :current-value="dataGridRef?.defaultCopyPreference ?? ''"
