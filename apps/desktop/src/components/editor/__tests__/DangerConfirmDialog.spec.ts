@@ -232,14 +232,19 @@ describe("DangerConfirmDialog running/cancel footer state", () => {
 describe("DangerConfirmDialog data-loss note", () => {
   const noteText = () => document.body.querySelector("[data-testid='danger-data-loss-note']")?.textContent?.trim();
 
-  it("warns that TRUNCATE and DROP TABLE data cannot be recovered", async () => {
+  it("warns for TRUNCATE and DROP without claiming the rows are gone for good", async () => {
     await mountDialog("TRUNCATE TABLE public.orders;");
-    expect(noteText()).toContain(i18n.global.t("dangerDialog.noteUnrecoverable"));
+    expect(noteText()).toContain(i18n.global.t("dangerDialog.noteRecoveryNotGuaranteed"));
   });
 
-  it("says a row-wise DELETE can be recovered", async () => {
+  it("does not promise that a row-wise DELETE can be recovered", async () => {
     await mountDialog("DELETE FROM public.orders;");
-    expect(noteText()).toContain(i18n.global.t("dangerDialog.noteRecoverable"));
+    expect(noteText()).toContain(i18n.global.t("dangerDialog.noteRecoveryNotGuaranteed"));
+  });
+
+  it("recognises a destructive statement behind a leading comment", async () => {
+    await mountDialog("-- cleanup\nDROP TABLE public.orders;");
+    expect(noteText()).toContain(i18n.global.t("dangerDialog.noteRecoveryNotGuaranteed"));
   });
 
   it("stays quiet for DDL that does not delete rows", async () => {

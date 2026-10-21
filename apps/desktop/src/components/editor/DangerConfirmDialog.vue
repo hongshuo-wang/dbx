@@ -83,14 +83,10 @@ const code = computed(() => props.details || props.sql);
 const preview = computed(() => createBoundedTextPreview(code.value, { maxCharacters: DANGER_PREVIEW_MAX_CHARACTERS, maxLines: DANGER_PREVIEW_MAX_LINES }));
 const highlightedHead = computed(() => highlight(preview.value.head));
 const highlightedTail = computed(() => highlight(preview.value.tail));
-// Say whether the rows survive the statement: TRUNCATE/DROP keep no row data, a
-// row-wise DELETE does. Derived from the previewed SQL so an engine that truncates with
-// DELETE (SQLite, DuckDB, Spanner) or clears with TRUNCATE (ClickHouse, Doris) stays correct.
-const dataLossNote = computed(() => {
-  const level = tableDangerNote(code.value);
-  if (!level) return null;
-  return { level, text: level === "unrecoverable" ? t("dangerDialog.noteUnrecoverable") : t("dangerDialog.noteRecoverable") };
-});
+// Destructive statements get one conservative note. Whether rows can actually be
+// restored depends on the transaction state, logging and backups, none of which the
+// dialog can inspect, so it never promises recovery.
+const showDataLossNote = computed(() => tableDangerNote(code.value));
 const dialogOpen = computed({
   get: () => open.value,
   set: (value) => {
@@ -150,9 +146,9 @@ async function copyFullCode() {
 
       <div class="py-4 min-w-0">
         <p class="text-sm text-muted-foreground mb-3">{{ message || t("dangerDialog.message") }}</p>
-        <p v-if="dataLossNote" data-testid="danger-data-loss-note" :data-level="dataLossNote.level" class="mb-3 flex items-start gap-1.5 text-xs leading-5" :class="dataLossNote.level === 'unrecoverable' ? 'text-destructive' : 'text-amber-600 dark:text-amber-400'">
+        <p v-if="showDataLossNote" data-testid="danger-data-loss-note" class="mb-3 flex items-start gap-1.5 text-xs leading-5 text-destructive">
           <AlertTriangle class="mt-0.5 size-3.5 shrink-0" aria-hidden="true" />
-          <span>{{ dataLossNote.text }}</span>
+          <span>{{ t("dangerDialog.noteRecoveryNotGuaranteed") }}</span>
         </p>
         <p v-if="detailsText" class="text-xs text-muted-foreground mb-3 whitespace-pre-line max-h-40 overflow-auto">{{ detailsText }}</p>
         <slot name="options" />
