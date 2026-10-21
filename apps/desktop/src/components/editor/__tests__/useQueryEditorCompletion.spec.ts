@@ -655,7 +655,8 @@ describe("quoted identifier completion results (issue #12008)", () => {
   it("keeps CodeMirror's matcher enabled for a bare identifier prefix", async () => {
     vi.useRealTimers();
     try {
-      const { provide, store } = createHarness({ databaseType: "mysql", dialect: "mysql", modelValue: "SELECT * FROM test_" }, undefined, true);
+      // INSERT has no independent table-alias candidates that need matcher bypass.
+      const { provide, store } = createHarness({ databaseType: "mysql", dialect: "mysql", modelValue: "INSERT INTO test_" }, undefined, true);
       store.lookupLocalCompletionTables.mockReturnValue([{ name: "test_table" }]);
       store.listCompletionTables.mockResolvedValue([{ name: "test_table" }]);
 
